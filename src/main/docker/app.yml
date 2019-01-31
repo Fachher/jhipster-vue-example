@@ -1,0 +1,20 @@
+version: '2'
+services:
+    helloworld-app:
+        image: helloworld
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mariadb://helloworld-mariadb:3306/helloworld
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_JEST_URI=http://helloworld-elasticsearch:9200
+        ports:
+            - 8080:8080
+    helloworld-mariadb:
+        extends:
+            file: mariadb.yml
+            service: helloworld-mariadb
+    helloworld-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: helloworld-elasticsearch
